@@ -1,28 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:messenger/views/screens/messages_screen.dart';
 
 class Messages extends StatelessWidget {
-  const Messages({super.key, required this.users});
-  final List users;
+  const Messages(
+      {super.key, required this.messages, required this.currentUserId});
+  final List messages;
+  // ignore: prefer_typing_uninitialized_variables
+  final currentUserId;
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: users.length,
+      itemCount: messages.length,
       itemBuilder: (ctx, index) {
-        return ListTile(
-          hoverColor: Colors.blue,
-          title: Text(users[index]["firstName"]),
-          subtitle: Text(users[index]["lastName"]),
-          trailing: Text(users[index]["email"]),
-          titleTextStyle: const TextStyle(fontSize: 20),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (ctx) => const MessagesScreen(),
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: currentUserId != messages[index]['senderId']
+              ? CrossAxisAlignment.start
+              : CrossAxisAlignment.end,
+          children: [
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  messages[index]['message'],
+                ),
               ),
-            );
-          },
+            ),
+          ],
         );
       },
     );

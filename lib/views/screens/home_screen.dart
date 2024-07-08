@@ -12,14 +12,16 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final users = UserController();
     return Scaffold(
-      appBar: AppBar(actions: [
-        IconButton(
-          onPressed: () {
-            AuthService().logOut();
-          },
-          icon: const Icon(Icons.logout),
-        ),
-      ]),
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: () {
+              AuthService().logOut();
+            },
+            icon: const Icon(Icons.logout),
+          ),
+        ],
+      ),
       body: StreamBuilder(
         stream: users.getusers(),
         builder: (context, snapshot) {
@@ -36,7 +38,6 @@ class HomeScreen extends StatelessWidget {
             );
           }
           final users = snapshot.data!.docs;
-          
 
           return Chats(
             users: users,
